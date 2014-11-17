@@ -1,2 +1,4 @@
 syntax: glob
 testData/
+*.pyc
+pyElectronMicroscopy/.coverage
