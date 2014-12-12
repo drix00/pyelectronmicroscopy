@@ -20,7 +20,7 @@ import logging
 # Third party modules.
 
 # Local modules.
-import InterplanarSpacing
+import pyElectronMicroscopy.TEM.InterplanarSpacing as InterplanarSpacing
 
 # Globals and constants variables.
 

@@ -20,7 +20,7 @@ import logging
 # Third party modules.
 
 # Local modules.
-import AngleBetweenDirections
+import pyElectronMicroscopy.TEM.AngleBetweenDirections as AngleBetweenDirections
 
 # Globals and constants variables.
 

@@ -20,7 +20,7 @@ import math
 # Third party modules.
 
 # Local modules.
-import CrystalSystem
+import pyElectronMicroscopy.TEM.CrystalSystem
 
 # Globals and constants variables.
 

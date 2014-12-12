@@ -20,7 +20,7 @@ import logging
 # Third party modules.
 
 # Local modules.
-import DiffractionSpot
+import pyElectronMicroscopy.TEM.DiffractionSpot as DiffractionSpot
 
 # Globals and constants variables.
 

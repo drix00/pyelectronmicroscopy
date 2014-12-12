@@ -22,8 +22,8 @@ from operator import itemgetter
 import numpy as np
 
 # Local modules.
-import DiffractionSpot
-import DiffractionVector
+import pyElectronMicroscopy.TEM.DiffractionSpot as DiffractionSpot
+import pyElectronMicroscopy.TEM.DiffractionVector as DiffractionVector
 import pyHendrixDemersTools.Files as Files
 
 # Globals and constants variables.
@@ -126,7 +126,7 @@ class Indexing(object):
         if self._vectors == {}:
             self._computeDiffractionVectors()
 
-        keyItems = sorted(self._vectors.iteritems(), key=itemgetter(1))
+        keyItems = sorted(self._vectors.items(), key=itemgetter(1))
 
         ids = [keyItem[0] for keyItem in keyItems]
 
@@ -160,7 +160,7 @@ class Indexing(object):
             for N in range(1, 10):
                 line += "\t%0.3f" % (N*ratio2)
 
-            print line
+            print(line)
 
 def runHomework5q1a():
         configurationFilepath = Files.getCurrentModulePath(__file__, "../pyElectronMicroscope.cfg")
@@ -192,7 +192,7 @@ def runHomework5q1d():
 
         for ids in indexing._independantIdVectors:
             for id in ids:
-                print "%.1f" % (indexing._vectors[id].getLength())
+                print("%.1f" % (indexing._vectors[id].getLength()))
 
 def run():
     #runHomework5q1a()

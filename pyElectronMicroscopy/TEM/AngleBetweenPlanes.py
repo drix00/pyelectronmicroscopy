@@ -19,7 +19,7 @@ import math
 # Third party modules.
 
 # Local modules.
-import CrystalSystem
+import pyElectronMicroscopy.TEM.CrystalSystem as CrystalSystem
 
 # Globals and constants variables.
 
@@ -93,7 +93,7 @@ def runHomework05_3b():
         plane1, plane2 = planes
         angle_deg = angleBetweenPlanesCubic_deg(plane1, plane2)
 
-        print "%s: %0.1f" % (str(planes), angle_deg)
+        print("%s: %0.1f" % (str(planes), angle_deg))
 
 if __name__ == '__main__':    #pragma: no cover
     import pyHendrixDemersTools.Runner as Runner
