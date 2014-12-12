@@ -22,7 +22,7 @@ import math
 import numpy as np
 
 # Local modules.
-import Indexing
+import pyElectronMicroscopy.TEM.Indexing as Indexing
 import pyHendrixDemersTools.Files as Files
 
 # Globals and constants variables.

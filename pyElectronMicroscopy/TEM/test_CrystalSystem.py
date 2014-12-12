@@ -20,7 +20,7 @@ import logging
 # Third party modules.
 
 # Local modules.
-import CrystalSystem
+import pyElectronMicroscopy.TEM.CrystalSystem as CrystalSystem
 
 # Globals and constants variables.
 

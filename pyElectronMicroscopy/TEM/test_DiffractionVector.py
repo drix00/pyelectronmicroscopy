@@ -20,8 +20,8 @@ import logging
 # Third party modules.
 
 # Local modules.
-import DiffractionVector
-import DiffractionSpot
+import pyElectronMicroscopy.TEM.DiffractionVector as DiffractionVector
+import pyElectronMicroscopy.TEM.DiffractionSpot as DiffractionSpot
 # Globals and constants variables.
 
 class TestDiffractionVector(unittest.TestCase):

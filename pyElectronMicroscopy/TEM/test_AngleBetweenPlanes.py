@@ -20,7 +20,7 @@ import logging
 # Third party modules.
 
 # Local modules.
-import AngleBetweenPlanes
+import pyElectronMicroscopy.TEM.AngleBetweenPlanes as AngleBetweenPlanes
 
 # Globals and constants variables.
 
