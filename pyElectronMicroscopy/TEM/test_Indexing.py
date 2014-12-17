@@ -17,9 +17,11 @@ __svnId__ = "$Id: test_Indexing.py 2378 2011-06-20 19:45:48Z hdemers $"
 import unittest
 import logging
 import math
+import os.path
 
 # Third party modules.
 import numpy as np
+from nose import SkipTest
 
 # Local modules.
 import pyElectronMicroscopy.TEM.Indexing as Indexing
@@ -34,6 +36,9 @@ class TestIndexing(unittest.TestCase):
 
         self.filepath = Files.getCurrentModulePath(__file__, "../../testData/q1a_c16.txt")
         logging.debug(self.filepath)
+        if not os.path.isfile(self.filepath):
+            raise SkipTest
+
         self.indexing = Indexing.Indexing(self.filepath, centerID=16)
 
         self.numberPoints = 22
