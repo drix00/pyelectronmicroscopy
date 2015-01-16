@@ -31,14 +31,14 @@ def computeRange():
     line = "%4s\t" % ('Z')
     for energy_keV in energies_keV:
         line += "%6.1fkeV\t" % (energy_keV)
-    print line
+    print(line)
 
     for atomicNumber in atomicNumbers:
         line = "%4i\t" % (atomicNumber)
         for energy_keV in energies_keV:
             range_nm = rangeKO_nm(atomicNumber, energy_keV*1.0e3)
             line += "%9.1f\t" % (range_nm)
-        print line
+        print(line)
 
 if __name__ == '__main__':  #pragma: no cover
     import pyHendrixDemersTools.Runner as Runner
