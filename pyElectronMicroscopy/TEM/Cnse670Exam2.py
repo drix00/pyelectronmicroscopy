@@ -48,7 +48,7 @@ def getFamily(lineNumber):
 
 def run():
     lineNumbers = getLineNumber()
-    print lineNumbers
+    print(lineNumbers)
 
 if __name__ == '__main__':    #pragma: no cover
     import pyHendrixDemersTools.Runner as Runner
