@@ -19,7 +19,7 @@ import math
 # Third party modules.
 
 # Local modules.
-import DatabasesTools.ElementProperties as ElementProperties
+import pywinxraydata.ElementProperties as ElementProperties
 
 # Project modules
 
