@@ -3,3 +3,4 @@ testData/
 *.pyc
 pyElectronMicroscopy/.coverage
 pyElectronMicroscopy.egg-info/
+build
