@@ -5,3 +5,4 @@ electronmicroscopy/.coverage
 pyElectronMicroscopy.egg-info/
 build
 .idea/
+*.egg-info
