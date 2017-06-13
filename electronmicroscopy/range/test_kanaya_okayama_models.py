@@ -59,7 +59,7 @@ class TestKanayaOkayamaModels(unittest.TestCase):
         atomicNumbers = [6, 79]
         for atomicNumber in atomicNumbers:
             for energy_eV in energies_eV:
-                range_nm = round(KanayaOkayamaModels._rangeOriginalPaper_nm(atomicNumber, energy_eV))
+                range_nm = round(KanayaOkayamaModels._range_original_paper_nm(atomicNumber, energy_eV))
                 rangeRef_nm = rangesRef_nm[atomicNumber][energy_eV]
                 self.assertEqual(rangeRef_nm, range_nm)
 
@@ -73,7 +73,7 @@ class TestKanayaOkayamaModels(unittest.TestCase):
         atomicNumbers = [6, 79]
         for atomicNumber in atomicNumbers:
             for energy_eV in energies_eV:
-                range_nm = round(KanayaOkayamaModels._rangeGolsteinBook_nm(atomicNumber, energy_eV))
+                range_nm = round(KanayaOkayamaModels._range_goldstein_book_nm(atomicNumber, energy_eV))
                 rangeRef_nm = rangesRef_nm[atomicNumber][energy_eV]
                 self.assertEqual(rangeRef_nm, range_nm)
 
@@ -87,7 +87,7 @@ class TestKanayaOkayamaModels(unittest.TestCase):
         atomicNumbers = [6, 79]
         for atomicNumber in atomicNumbers:
             for energy_eV in energies_eV:
-                range_nm = round(KanayaOkayamaModels.rangeRelativistic_nm(atomicNumber, energy_eV))
+                range_nm = round(KanayaOkayamaModels.range_relativistic_nm(atomicNumber, energy_eV))
                 rangeRef_nm = rangesRef_nm[atomicNumber][energy_eV]
                 self.assertEqual(rangeRef_nm, range_nm)
 
