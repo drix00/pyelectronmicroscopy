@@ -49,7 +49,7 @@ class TestDataCommand(Command):
                     arcname = os.path.relpath(filename, basepath)
                     z.write(filename, arcname)
 
-setup(name="pyElectronMicroscopy",
+setup(name="electronmicroscopy",
       version='0.1',
       url='',
       description="",

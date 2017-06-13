@@ -1,6 +1,7 @@
 syntax: glob
 testData/
 *.pyc
-pyElectronMicroscopy/.coverage
+electronmicroscopy/.coverage
 pyElectronMicroscopy.egg-info/
 build
+.idea/
