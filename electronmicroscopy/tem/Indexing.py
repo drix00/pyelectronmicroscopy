@@ -22,8 +22,8 @@ from operator import itemgetter
 import numpy as np
 
 # Local modules.
-import electronmicroscopy.tem.DiffractionSpot as DiffractionSpot
-import electronmicroscopy.tem.DiffractionVector as DiffractionVector
+import electronmicroscopy.tem.diffraction_spot as DiffractionSpot
+import electronmicroscopy.tem.diffraction_vector as DiffractionVector
 import pyHendrixDemersTools.Files as Files
 
 # Globals and constants variables.

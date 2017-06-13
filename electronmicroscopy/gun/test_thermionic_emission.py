@@ -20,7 +20,7 @@ import logging
 # Third party modules.
 
 # Local modules.
-import electronmicroscopy.gun.ThermionicEmission
+import electronmicroscopy.gun.thermionic_emission
 
 # Globals and constants variables.
 
