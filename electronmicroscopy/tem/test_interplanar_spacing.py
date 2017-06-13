@@ -1,279 +1,103 @@
 #!/usr/bin/env python
-""" """
+# -*- coding: utf-8 -*-
 
-# Script information for the file.
-__author__ = "Hendrix Demers (hendrix.demers@mail.mcgill.ca)"
-__version__ = ""
-__date__ = ""
-__copyright__ = "Copyright (c) 2009 Hendrix Demers"
-__license__ = ""
+"""
+.. py:currentmodule:: electronmicroscopy.tem.test_interplanar_spacing
 
-# Subversion informations for the file.
-__svnRevision__ = "$Revision: 2378 $"
-__svnDate__ = "$Date: 2011-06-20 15:45:48 -0400 (Mon, 20 Jun 2011) $"
-__svnId__ = "$Id: test_interplanar_spacing.py 2378 2011-06-20 19:45:48Z hdemers $"
+.. moduleauthor:: Hendrix Demers <hendrix.demers@mail.mcgill.ca>
+
+Tests for the module :py:mod:`electronmicroscopy.tem.interplanar_spacing`.
+"""
+
+###############################################################################
+# Copyright 2017 Hendrix Demers
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###############################################################################
 
 # Standard library modules.
 import unittest
-import logging
 
 # Third party modules.
 
 # Local modules.
-import electronmicroscopy.tem.interplanar_spacing as InterplanarSpacing
+
+# Project modules.
+from electronmicroscopy.tem.interplanar_spacing import interplanarSpacingCubic, interplanarSpacingTetragonal, \
+    interplanarSpacingOrthorhombic, interplanarSpacingHexagonal, interplanarSpacingRhombohedral, \
+    interplanarSpacingMonoclinic, interplanarSpacingTriclinic
 
 # Globals and constants variables.
 
+
 class TestInterplanarSpacing(unittest.TestCase):
+    """
+    TestCase class for the module `electronmicroscopy.tem.interplanar_spacing`.
+    """
 
     def setUp(self):
+        """
+        Setup method.
+        """
+
         unittest.TestCase.setUp(self)
 
     def tearDown(self):
+        """
+        Teardown method.
+        """
+
         unittest.TestCase.tearDown(self)
 
-    def getTestPlanes(self):
-        planes = []
-        planes.append((1,0,0))
-        planes.append((0,1,0))
-        planes.append((0,0,1))
-        planes.append((-1,0,0))
-        planes.append((0,-1,0))
-        planes.append((0,0,-1))
-
-        planes.append((3,2,1))
-        planes.append((3,1,2))
-        planes.append((1,3,2))
-        planes.append((1,2,3))
-        planes.append((2,3,1))
-        planes.append((2,1,3))
-
-        planes.append((-3,2,1))
-        planes.append((-3,-2,1))
-        planes.append((-3,-2,-1))
-        planes.append((3,-2,1))
-        planes.append((3,-2,-1))
-        planes.append((3,2,-1))
-
-        return planes
-
-    def getExpectedDCubic(self):
-        values = []
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-        values.append(0.66815310478106094)
-
-        return values
-
-    def getExpectedDTetragonal(self):
-        values = []
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(3.6)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(3.6)
-
-        values.append(0.68086149017077868)
-        values.append(0.72383197610000505)
-        values.append(0.72383197610000505)
-        values.append(0.81801282472381764)
-        values.append(0.68086149017077868)
-        values.append(0.81801282472381764)
-
-        values.append(0.68086149017077868)
-        values.append(0.68086149017077868)
-        values.append(0.68086149017077868)
-        values.append(0.68086149017077868)
-        values.append(0.68086149017077868)
-        values.append(0.68086149017077868)
-
-        return values
-
-    def getExpectedDOrthorhombic(self):
-        values = []
-
-        values.append(2.5)
-        values.append(1.2)
-        values.append(3.6)
-        values.append(2.5)
-        values.append(1.2)
-        values.append(3.6)
-
-        values.append(0.48252690814099836)
-        values.append(0.63977989039277638)
-        values.append(0.38579735919182145)
-        values.append(0.52470329858389009)
-        values.append(0.3788541880465412)
-        values.append(0.70205456580136349)
-
-        values.append(0.48252690814099836)
-        values.append(0.48252690814099836)
-        values.append(0.48252690814099836)
-        values.append(0.48252690814099836)
-        values.append(0.48252690814099836)
-        values.append(0.48252690814099836)
-
-        return values
-
-    def getExpectedDHexagonal(self):
-        values = []
-
-        values.append(2.1650635094610964)
-        values.append(2.1650635094610964)
-        values.append(3.6)
-        values.append(2.1650635094610964)
-        values.append(2.1650635094610964)
-        values.append(3.6)
-
-        values.append(0.49203841548543459)
-        values.append(0.569620253164557)
-        values.append(0.569620253164557)
-        values.append(0.67608047940072502)
-        values.append(0.49203841548543459)
-        values.append(0.67608047940072502)
-
-        values.append(0.7979613991076534)
-        values.append(0.49203841548543459)
-        values.append(0.49203841548543459)
-        values.append(0.7979613991076534)
-        values.append(0.7979613991076534)
-        values.append(0.49203841548543459)
-
-        return values
-
-    def getExpectedDRhombohedral(self):
-        values = []
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        return values
-
-    def getExpectedDMonoclinic(self):
-        values = []
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        return values
-
-    def getExpectedDTriclinic(self):
-        values = []
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-        values.append(2.5)
-
-        return values
-
     def testSkeleton(self):
-        #self.fail("Test if the testcase is working.")
+        """
+        First test to check if the testcase is working with the testing framework.
+        """
+
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_interplanarSpacingCubic(self):
         a = 2.5
 
-        planes = self.getTestPlanes()
-        expectedDs = self.getExpectedDCubic()
+        planes = get_test_planes()
+        expected_ds = get_expected_d_cubic()
 
-        for expectedD,plane in zip(expectedDs, planes):
-            actualD = InterplanarSpacing.interplanarSpacingCubic(plane, a)
+        for expected_d, plane in zip(expected_ds, planes):
+            actual_d = interplanarSpacingCubic(plane, a)
 
-            self.assertAlmostEquals(expectedD, actualD)
+            self.assertAlmostEquals(expected_d, actual_d)
 
-        self.assertEquals(len(expectedDs), len(planes))
+        self.assertEquals(len(expected_ds), len(planes))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_interplanarSpacingTetragonal(self):
         a = 2.5
         c = 3.6
 
-        planes = self.getTestPlanes()
-        expectedDs = self.getExpectedDTetragonal()
+        planes = get_test_planes()
+        expected_ds = get_expected_d_tetragonal()
 
-        for expectedD,plane in zip(expectedDs, planes):
-            actualD = InterplanarSpacing.interplanarSpacingTetragonal(plane, a, c)
+        for expected_d, plane in zip(expected_ds, planes):
+            actual_d = interplanarSpacingTetragonal(plane, a, c)
 
-            self.assertAlmostEquals(expectedD, actualD)
+            self.assertAlmostEquals(expected_d, actual_d)
 
-        self.assertEquals(len(expectedDs), len(planes))
+        self.assertEquals(len(expected_ds), len(planes))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_interplanarSpacingOrthorhombic(self):
@@ -281,51 +105,51 @@ class TestInterplanarSpacing(unittest.TestCase):
         b = 1.2
         c = 3.6
 
-        planes = self.getTestPlanes()
-        expectedDs = self.getExpectedDOrthorhombic()
+        planes = get_test_planes()
+        expected_ds = get_expected_d_orthorhombic()
 
-        for expectedD,plane in zip(expectedDs, planes):
-            actualD = InterplanarSpacing.interplanarSpacingOrthorhombic(plane, a, b, c)
+        for expected_d, plane in zip(expected_ds, planes):
+            actual_d = interplanarSpacingOrthorhombic(plane, a, b, c)
 
-            self.assertAlmostEquals(expectedD, actualD)
+            self.assertAlmostEquals(expected_d, actual_d)
 
-        self.assertEquals(len(expectedDs), len(planes))
+        self.assertEquals(len(expected_ds), len(planes))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_interplanarSpacingHexagonal(self):
         a = 2.5
         c = 3.6
 
-        planes = self.getTestPlanes()
-        expectedDs = self.getExpectedDHexagonal()
+        planes = get_test_planes()
+        expected_ds = get_expected_d_hexagonal()
 
-        for expectedD,plane in zip(expectedDs, planes):
-            actualD = InterplanarSpacing.interplanarSpacingHexagonal(plane, a, c)
+        for expected_d, plane in zip(expected_ds, planes):
+            actual_d = interplanarSpacingHexagonal(plane, a, c)
 
-            self.assertAlmostEquals(expectedD, actualD)
+            self.assertAlmostEquals(expected_d, actual_d)
 
-        self.assertEquals(len(expectedDs), len(planes))
+        self.assertEquals(len(expected_ds), len(planes))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_interplanarSpacingRhombohedral(self):
         a = 2.5
         alpha_deg = 39.56
 
-        planes = self.getTestPlanes()
-        expectedDs = self.getExpectedDRhombohedral()
+        planes = get_test_planes()
+        expected_ds = get_expected_d_rhombohedral()
 
-        for expectedD,plane in zip(expectedDs, planes):
-            actualD = InterplanarSpacing.interplanarSpacingRhombohedral(plane, a, alpha_deg)
+        for expected_d, plane in zip(expected_ds, planes):
+            actual_d = interplanarSpacingRhombohedral(plane, a, alpha_deg)
 
-            self.assertAlmostEquals(expectedD, actualD)
+            self.assertAlmostEquals(expected_d, actual_d)
 
-        self.assertEquals(len(expectedDs), len(planes))
+        self.assertEquals(len(expected_ds), len(planes))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_interplanarSpacingMonoclinic(self):
@@ -334,17 +158,17 @@ class TestInterplanarSpacing(unittest.TestCase):
         c = 3.6
         beta_deg = 86.56
 
-        planes = self.getTestPlanes()
-        expectedDs = self.getExpectedDMonoclinic()
+        planes = get_test_planes()
+        expected_ds = get_expected_d_monoclinic()
 
-        for expectedD,plane in zip(expectedDs, planes):
-            actualD = InterplanarSpacing.interplanarSpacingMonoclinic(plane, a, b, c, beta_deg)
+        for expected_d, plane in zip(expected_ds, planes):
+            actual_d = interplanarSpacingMonoclinic(plane, a, b, c, beta_deg)
 
-            self.assertAlmostEquals(expectedD, actualD)
+            self.assertAlmostEquals(expected_d, actual_d)
 
-        self.assertEquals(len(expectedDs), len(planes))
+        self.assertEquals(len(expected_ds), len(planes))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_interplanarSpacingTriclinic(self):
@@ -355,20 +179,236 @@ class TestInterplanarSpacing(unittest.TestCase):
         beta_deg = 86.56
         gamma_deg = 86.56
 
-        planes = self.getTestPlanes()
-        expectedDs = self.getExpectedDTriclinic()
+        planes = get_test_planes()
+        expected_ds = get_expected_d_triclinic()
 
-        for expectedD,plane in zip(expectedDs, planes):
-            actualD = InterplanarSpacing.interplanarSpacingTriclinic(plane, a, b, c, alpha_deg, beta_deg, gamma_deg)
+        for expected_d, plane in zip(expected_ds, planes):
+            actual_d = interplanarSpacingTriclinic(plane, a, b, c, alpha_deg, beta_deg, gamma_deg)
 
-            self.assertAlmostEquals(expectedD, actualD)
+            self.assertAlmostEquals(expected_d, actual_d)
 
-        self.assertEquals(len(expectedDs), len(planes))
+        self.assertEquals(len(expected_ds), len(planes))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
-if __name__ == '__main__':    #pragma: no cover
-    logging.getLogger().setLevel(logging.DEBUG)
-    from pyHendrixDemersTools.Testings import runTestModule
-    runTestModule()
+
+def get_test_planes():
+    planes = []
+
+    planes.append((1, 0, 0))
+    planes.append((0, 1, 0))
+    planes.append((0, 0, 1))
+    planes.append((-1, 0, 0))
+    planes.append((0, -1, 0))
+    planes.append((0, 0, -1))
+
+    planes.append((3, 2, 1))
+    planes.append((3, 1, 2))
+    planes.append((1, 3, 2))
+    planes.append((1, 2, 3))
+    planes.append((2, 3, 1))
+    planes.append((2, 1, 3))
+
+    planes.append((-3, 2, 1))
+    planes.append((-3, -2, 1))
+    planes.append((-3, -2, -1))
+    planes.append((3, -2, 1))
+    planes.append((3, -2, -1))
+    planes.append((3, 2, -1))
+
+    return planes
+
+
+def get_expected_d_cubic():
+    values = []
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+    values.append(0.66815310478106094)
+
+    return values
+
+
+def get_expected_d_tetragonal():
+    values = []
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(3.6)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(3.6)
+
+    values.append(0.68086149017077868)
+    values.append(0.72383197610000505)
+    values.append(0.72383197610000505)
+    values.append(0.81801282472381764)
+    values.append(0.68086149017077868)
+    values.append(0.81801282472381764)
+
+    values.append(0.68086149017077868)
+    values.append(0.68086149017077868)
+    values.append(0.68086149017077868)
+    values.append(0.68086149017077868)
+    values.append(0.68086149017077868)
+    values.append(0.68086149017077868)
+
+    return values
+
+
+def get_expected_d_orthorhombic():
+    values = []
+
+    values.append(2.5)
+    values.append(1.2)
+    values.append(3.6)
+    values.append(2.5)
+    values.append(1.2)
+    values.append(3.6)
+
+    values.append(0.48252690814099836)
+    values.append(0.63977989039277638)
+    values.append(0.38579735919182145)
+    values.append(0.52470329858389009)
+    values.append(0.3788541880465412)
+    values.append(0.70205456580136349)
+
+    values.append(0.48252690814099836)
+    values.append(0.48252690814099836)
+    values.append(0.48252690814099836)
+    values.append(0.48252690814099836)
+    values.append(0.48252690814099836)
+    values.append(0.48252690814099836)
+
+    return values
+
+
+def get_expected_d_hexagonal():
+    values = []
+
+    values.append(2.1650635094610964)
+    values.append(2.1650635094610964)
+    values.append(3.6)
+    values.append(2.1650635094610964)
+    values.append(2.1650635094610964)
+    values.append(3.6)
+
+    values.append(0.49203841548543459)
+    values.append(0.569620253164557)
+    values.append(0.569620253164557)
+    values.append(0.67608047940072502)
+    values.append(0.49203841548543459)
+    values.append(0.67608047940072502)
+
+    values.append(0.7979613991076534)
+    values.append(0.49203841548543459)
+    values.append(0.49203841548543459)
+    values.append(0.7979613991076534)
+    values.append(0.7979613991076534)
+    values.append(0.49203841548543459)
+
+    return values
+
+
+def get_expected_d_rhombohedral():
+    values = []
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    return values
+
+
+def get_expected_d_monoclinic():
+    values = []
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    return values
+
+
+def get_expected_d_triclinic():
+    values = []
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+    values.append(2.5)
+
+    return values
+
+
+if __name__ == '__main__':  # pragma: no cover
+    import nose
+    nose.runmodule()
