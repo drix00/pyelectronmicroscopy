@@ -22,7 +22,7 @@ import logging
 # Local modules.
 
 # Project modules
-import electronmicroscopy.range.KanayaOkayamaModels as KanayaOkayamaModels
+import electronmicroscopy.range.kanaya_okayama_models as KanayaOkayamaModels
 
 # Globals and constants variables.
 

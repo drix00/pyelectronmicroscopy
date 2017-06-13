@@ -12,7 +12,7 @@ __license__ = ""
 # Subversion informations for the file.
 __svnRevision__ = "$Revision: 2293 $"
 __svnDate__ = "$Date: 2011-03-21 14:39:25 -0400 (Mon, 21 Mar 2011) $"
-__svnId__ = "$Id: InterplanarSpacing.py 2293 2011-03-21 18:39:25Z hdemers $"
+__svnId__ = "$Id: interplanar_spacing.py 2293 2011-03-21 18:39:25Z hdemers $"
 
 # Standard library modules.
 import math
@@ -20,7 +20,7 @@ import math
 # Third party modules.
 
 # Local modules.
-import electronmicroscopy.tem.CrystalSystem as CrystalSystem
+import electronmicroscopy.tem.crystal_system as CrystalSystem
 
 # Globals and constants variables.
 

@@ -11,7 +11,7 @@ __license__ = ""
 # Subversion informations for the file.
 __svnRevision__ = "$Revision: 2378 $"
 __svnDate__ = "$Date: 2011-06-20 15:45:48 -0400 (Mon, 20 Jun 2011) $"
-__svnId__ = "$Id: test_CrystalSystem.py 2378 2011-06-20 19:45:48Z hdemers $"
+__svnId__ = "$Id: test_crystal_system.py 2378 2011-06-20 19:45:48Z hdemers $"
 
 # Standard library modules.
 import unittest
@@ -20,7 +20,7 @@ import logging
 # Third party modules.
 
 # Local modules.
-import electronmicroscopy.tem.CrystalSystem as CrystalSystem
+import electronmicroscopy.tem.crystal_system as CrystalSystem
 
 # Globals and constants variables.
 

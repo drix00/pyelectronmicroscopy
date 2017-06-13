@@ -11,7 +11,7 @@ __license__ = ""
 # Subversion informations for the file.
 __svnRevision__ = "$Revision: 2293 $"
 __svnDate__ = "$Date: 2011-03-21 14:39:25 -0400 (Mon, 21 Mar 2011) $"
-__svnId__ = "$Id: DiffractionSpot.py 2293 2011-03-21 18:39:25Z hdemers $"
+__svnId__ = "$Id: diffraction_spot.py 2293 2011-03-21 18:39:25Z hdemers $"
 
 # Standard library modules.
 import math

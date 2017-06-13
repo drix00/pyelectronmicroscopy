@@ -11,7 +11,7 @@ __license__ = ""
 # Subversion informations for the file.
 __svnRevision__ = "$Revision: 2293 $"
 __svnDate__ = "$Date: 2011-03-21 14:39:25 -0400 (Mon, 21 Mar 2011) $"
-__svnId__ = "$Id: AngleBetweenPlanes.py 2293 2011-03-21 18:39:25Z hdemers $"
+__svnId__ = "$Id: angle_between_directions.py 2293 2011-03-21 18:39:25Z hdemers $"
 
 # Standard library modules.
 import math
@@ -19,44 +19,44 @@ import math
 # Third party modules.
 
 # Local modules.
-import electronmicroscopy.tem.CrystalSystem as CrystalSystem
+import electronmicroscopy.tem.crystal_system as CrystalSystem
 
 # Globals and constants variables.
 
-def angleBetweenPlanes_deg(plane1, plane2, crystalSystem):
+def angleBetweenDirections_deg(direction1, direction2, crystalSystem):
     type = crystalSystem.getType()
 
     if type == CrystalSystem.CUBIC:
-        return angleBetweenPlanesCubic_deg(plane1, plane2)
+        return angleBetweenDirectionsCubic_deg(direction1, direction2)
 
     elif type == CrystalSystem.TETRAGONAL:
         a = crystalSystem.getA()
         c = crystalSystem.getC()
-        return angleBetweenPlanesTetragonal_deg(plane1, plane2, a, c)
+        return angleBetweenDirectionsTetragonal_deg(direction1, direction2, a, c)
 
     elif type == CrystalSystem.ORTHORHOMIC:
         a = crystalSystem.getA()
         b = crystalSystem.getB()
         c = crystalSystem.getC()
-        return angleBetweenPlanesOrthorhombic_deg(plane1, plane2, a, b, c)
+        return angleBetweenDirectionsOrthorhombic_deg(direction1, direction2, a, b, c)
 
     elif type == CrystalSystem.HEXAGONAL:
         a = crystalSystem.getA()
         c = crystalSystem.getC()
-        return angleBetweenPlanesHexagonal_deg(plane1, plane2, a, c)
+        return angleBetweenDirectionsHexagonal_deg(direction1, direction2, a, c)
 
     elif type == CrystalSystem.RHOMBOHEDRAL:
         a = crystalSystem.getA()
         # TODO: Find the correct value for c
         c = crystalSystem.getC()
-        return angleBetweenPlanesRhombohedral_deg(plane1, plane2, a, c)
+        return angleBetweenDirectionsRhombohedral_deg(direction1, direction2, a, c)
 
     elif type == CrystalSystem.MONOCLINIC:
         a = crystalSystem.getA()
         b = crystalSystem.getB()
         c = crystalSystem.getC()
         beta = crystalSystem.getBeta()
-        return angleBetweenPlanesMonoclinic_deg(plane1, plane2, a, b, c, beta)
+        return angleBetweenDirectionsMonoclinic_deg(direction1, direction2, a, b, c, beta)
 
     elif type == CrystalSystem.TRICLINIC:
         a = crystalSystem.getA()
@@ -65,13 +65,13 @@ def angleBetweenPlanes_deg(plane1, plane2, crystalSystem):
         alpha = crystalSystem.getAlpha()
         beta = crystalSystem.getBeta()
         gamma = crystalSystem.getGamma()
-        return angleBetweenPlanesTriclinic_deg(plane1, plane2, a, b, c, alpha, beta, gamma)
+        return angleBetweenDirectionsTriclinic_deg(direction1, direction2, a, b, c, alpha, beta, gamma)
 
     return 0.0
 
-def angleBetweenPlanesCubic_deg(plane1, plane2):
-    (h1, k1, l1) = plane1
-    (h2, k2, l2) = plane2
+def angleBetweenDirectionsCubic_deg(direction1, direction2):
+    (h1, k1, l1) = direction1
+    (h2, k2, l2) = direction2
 
     nominator = h1*h2 + k1*k2 + l1*l2
 
@@ -79,22 +79,13 @@ def angleBetweenPlanesCubic_deg(plane1, plane2):
     factor2 = h2*h2 + k2*k2 + l2*l2
     denominator = math.sqrt(factor1*factor2)
 
-    cosPhi = nominator/denominator
-    phi_rad = math.acos(cosPhi)
+    cosRho = nominator/denominator
+    rho_rad = math.acos(cosRho)
 
-    phi_deg = math.degrees(phi_rad)
+    rho_deg = math.degrees(rho_rad)
 
-    return phi_deg
-
-def runHomework05_3b():
-    planesList = [((1,0,0), (0,1,0)), ((0,1,0), (0,0,1)), ((0,0,1), (1,0,0))]
-
-    for planes in planesList:
-        plane1, plane2 = planes
-        angle_deg = angleBetweenPlanesCubic_deg(plane1, plane2)
-
-        print("%s: %0.1f" % (str(planes), angle_deg))
+    return rho_deg
 
 if __name__ == '__main__':    #pragma: no cover
     import pyHendrixDemersTools.Runner as Runner
-    Runner.Runner().run(runFunction=runHomework05_3b)
+    Runner.Runner().run(runFunction=None)
