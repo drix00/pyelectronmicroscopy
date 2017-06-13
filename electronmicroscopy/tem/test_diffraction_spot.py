@@ -1,99 +1,128 @@
 #!/usr/bin/env python
-""" """
+# -*- coding: utf-8 -*-
 
-# Script information for the file.
-__author__ = "Hendrix Demers (hendrix.demers@mail.mcgill.ca)"
-__version__ = ""
-__date__ = ""
-__copyright__ = "Copyright (c) 2009 Hendrix Demers"
-__license__ = ""
+"""
+.. py:currentmodule:: electronmicroscopy.tem.test_diffraction_spot
 
-# Subversion informations for the file.
-__svnRevision__ = "$Revision: 2378 $"
-__svnDate__ = "$Date: 2011-06-20 15:45:48 -0400 (Mon, 20 Jun 2011) $"
-__svnId__ = "$Id: test_diffraction_spot.py 2378 2011-06-20 19:45:48Z hdemers $"
+.. moduleauthor:: Hendrix Demers <hendrix.demers@mail.mcgill.ca>
+
+Tests for the module :py:mod:`electronmicroscopy.tem.diffraction_spot`.
+"""
+
+###############################################################################
+# Copyright 2017 Hendrix Demers
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###############################################################################
 
 # Standard library modules.
 import unittest
-import logging
 
 # Third party modules.
 
 # Local modules.
-import electronmicroscopy.tem.diffraction_spot as DiffractionSpot
+
+# Project modules.
+from electronmicroscopy.tem.diffraction_spot import DiffractionSpot, X, Y
 
 # Globals and constants variables.
 
+
 class TestDiffractionSpot(unittest.TestCase):
+    """
+    TestCase class for the module `electronmicroscopy.tem.diffraction_spot`.
+    """
 
     def setUp(self):
+        """
+        Setup method.
+        """
+
         unittest.TestCase.setUp(self)
 
         self.originPosition = (140.9, 153.3)
         self.positionA = (182.4, 131.9)
-        self.spot = DiffractionSpot.DiffractionSpot(self.positionA, self.originPosition)
+        self.spot = DiffractionSpot(self.positionA, self.originPosition)
 
     def tearDown(self):
+        """
+        Teardown method.
+        """
+
         unittest.TestCase.tearDown(self)
 
     def testSkeleton(self):
-        #self.fail("Test if the testcase is working.")
+        """
+        First test to check if the testcase is working with the testing framework.
+        """
+
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def testConstructor(self):
-        expectedImagePosition = self.positionA
-        expectedOrigin = self.originPosition
+        expected_image_position = self.positionA
+        expected_origin = self.originPosition
 
-        spot = DiffractionSpot.DiffractionSpot(expectedImagePosition, expectedOrigin)
+        spot = DiffractionSpot(expected_image_position, expected_origin)
 
-        actualImagePosition = spot.getImagePosition()
-        self.assertAlmostEquals(expectedImagePosition[DiffractionSpot.X], actualImagePosition[DiffractionSpot.X])
-        self.assertAlmostEquals(expectedImagePosition[DiffractionSpot.Y], actualImagePosition[DiffractionSpot.Y])
+        actual_image_position = spot.getImagePosition()
+        self.assertAlmostEquals(expected_image_position[X], actual_image_position[X])
+        self.assertAlmostEquals(expected_image_position[Y], actual_image_position[Y])
 
-        actualOrigin = self.spot.getOriginPosition()
-        self.assertAlmostEquals(expectedOrigin[DiffractionSpot.X], actualOrigin[DiffractionSpot.X])
-        self.assertAlmostEquals(expectedOrigin[DiffractionSpot.Y], actualOrigin[DiffractionSpot.Y])
+        actual_origin = self.spot.getOriginPosition()
+        self.assertAlmostEquals(expected_origin[X], actual_origin[X])
+        self.assertAlmostEquals(expected_origin[Y], actual_origin[Y])
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_setImagePositionr(self):
-        spot = DiffractionSpot.DiffractionSpot()
+        spot = DiffractionSpot()
 
-        expectedImagePosition = self.positionA
-        spot.setImagePosition(expectedImagePosition)
+        expected_image_position = self.positionA
+        spot.setImagePosition(expected_image_position)
 
-        actualImagePosition = spot.getImagePosition()
-        self.assertAlmostEquals(expectedImagePosition[DiffractionSpot.X], actualImagePosition[DiffractionSpot.X])
-        self.assertAlmostEquals(expectedImagePosition[DiffractionSpot.Y], actualImagePosition[DiffractionSpot.Y])
+        actual_image_position = spot.getImagePosition()
+        self.assertAlmostEquals(expected_image_position[X], actual_image_position[X])
+        self.assertAlmostEquals(expected_image_position[Y], actual_image_position[Y])
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_setOriginPosition(self):
-        spot = DiffractionSpot.DiffractionSpot()
+        spot = DiffractionSpot()
 
-        expectedOrigin = self.originPosition
+        expected_origin = self.originPosition
         spot.setOriginPosition(self.originPosition)
 
-        actualOrigin = spot.getOriginPosition()
-        self.assertAlmostEquals(expectedOrigin[DiffractionSpot.X], actualOrigin[DiffractionSpot.X])
-        self.assertAlmostEquals(expectedOrigin[DiffractionSpot.Y], actualOrigin[DiffractionSpot.Y])
+        actual_origin = spot.getOriginPosition()
+        self.assertAlmostEquals(expected_origin[X], actual_origin[X])
+        self.assertAlmostEquals(expected_origin[Y], actual_origin[Y])
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_getPosition(self):
-        expectedPositionA = (41.5, -21.4)
-        actualPositionA = self.spot.getPosition()
+        expected_position_a = (41.5, -21.4)
+        actual_position_a = self.spot.getPosition()
 
-        self.assertAlmostEquals(expectedPositionA[DiffractionSpot.X], actualPositionA[DiffractionSpot.X])
-        self.assertAlmostEquals(expectedPositionA[DiffractionSpot.Y], actualPositionA[DiffractionSpot.Y])
+        self.assertAlmostEquals(expected_position_a[X], actual_position_a[X])
+        self.assertAlmostEquals(expected_position_a[Y], actual_position_a[Y])
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
-if __name__ == '__main__':    #pragma: no cover
-    logging.getLogger().setLevel(logging.DEBUG)
-    from pyHendrixDemersTools.Testings import runTestModule
-    runTestModule()
+
+if __name__ == '__main__':  # pragma: no cover
+    import nose
+    nose.runmodule()

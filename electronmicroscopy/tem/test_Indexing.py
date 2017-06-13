@@ -1,17 +1,29 @@
 #!/usr/bin/env python
-""" """
+# -*- coding: utf-8 -*-
 
-# Script information for the file.
-__author__ = "Hendrix Demers (hendrix.demers@mail.mcgill.ca)"
-__version__ = ""
-__date__ = ""
-__copyright__ = "Copyright (c) 2009 Hendrix Demers"
-__license__ = ""
+"""
+.. py:currentmodule:: electronmicroscopy.tem.test_indexing
 
-# Subversion informations for the file.
-__svnRevision__ = "$Revision: 2378 $"
-__svnDate__ = "$Date: 2011-06-20 15:45:48 -0400 (Mon, 20 Jun 2011) $"
-__svnId__ = "$Id: test_indexing.py 2378 2011-06-20 19:45:48Z hdemers $"
+.. moduleauthor:: Hendrix Demers <hendrix.demers@mail.mcgill.ca>
+
+Tests for the module :py:mod:`electronmicroscopy.tem.indexing`.
+"""
+
+###############################################################################
+# Copyright 2017 Hendrix Demers
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###############################################################################
 
 # Standard library modules.
 import unittest
@@ -24,14 +36,24 @@ import numpy as np
 from nose import SkipTest
 
 # Local modules.
-import electronmicroscopy.tem.Indexing as Indexing
 import pyHendrixDemersTools.Files as Files
+
+# Project modules.
+from electronmicroscopy.tem.indexing import Indexing
 
 # Globals and constants variables.
 
+
 class TestIndexing(unittest.TestCase):
+    """
+    TestCase class for the module `electronmicroscopy.tem.indexing`.
+    """
 
     def setUp(self):
+        """
+        Setup method.
+        """
+
         unittest.TestCase.setUp(self)
 
         self.filepath = Files.getCurrentModulePath(__file__, "../../testData/q1a_c16.txt")
@@ -39,7 +61,7 @@ class TestIndexing(unittest.TestCase):
         if not os.path.isfile(self.filepath):
             raise SkipTest
 
-        self.indexing = Indexing.Indexing(self.filepath, centerID=16)
+        self.indexing = Indexing(self.filepath, centerID=16)
 
         self.numberPoints = 22
 
@@ -48,42 +70,50 @@ class TestIndexing(unittest.TestCase):
         self.numberUniqueDiffractionVectors = 11
 
     def tearDown(self):
+        """
+        Teardown method.
+        """
+
         unittest.TestCase.tearDown(self)
 
     def testSkeleton(self):
-        #self.fail("Test if the testcase is working.")
+        """
+        First test to check if the testcase is working with the testing framework.
+        """
+
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_readFile(self):
-        indexing = Indexing.Indexing()
+        indexing = Indexing()
         indexing._readFile(self.filepath)
 
         points = indexing._positions
 
         self.assertEquals(self.numberPoints, len(points))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def testConstructor(self):
         points = self.indexing._positions
         self.assertEquals(self.numberPoints, len(points))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def testCenterPoint(self):
-        centerID = 16
+        center_id = 16
 
-        expectedCenterPosition = (141.4, 153.9)
+        expected_center_position = (141.4, 153.9)
 
-        self.indexing.setCenterByID(centerID)
-        actualCenterPosition = self.indexing.getCenterPointPosition()
+        self.indexing.setCenterByID(center_id)
+        actual_center_position = self.indexing.getCenterPointPosition()
 
-        self.assertAlmostEquals(expectedCenterPosition[0], actualCenterPosition[0])
-        self.assertAlmostEquals(expectedCenterPosition[1], actualCenterPosition[1])
+        self.assertAlmostEquals(expected_center_position[0], actual_center_position[0])
+        self.assertAlmostEquals(expected_center_position[1], actual_center_position[1])
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_computeDiffractionVectors(self):
@@ -95,7 +125,7 @@ class TestIndexing(unittest.TestCase):
         vectors = self.indexing._vectors
         self.assertEquals(self.numberDiffractionVectors, len(vectors))
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_computeIndependantDiffractionVectors(self):
@@ -107,40 +137,41 @@ class TestIndexing(unittest.TestCase):
         vectors = self.indexing._independantIdVectors
         self.assertEquals(self.numberUniqueDiffractionVectors, len(vectors))
 
-        expectedIds = []
-        expectedIds.append(['21', '12', '7', '3'])
-        expectedIds.append(['15', '18', '13', '20'])
-        expectedIds.append(['19', '14', '11'])
-        expectedIds.append(['22', '9', '4'])
-        expectedIds.append(['8'])
-        expectedIds.append(['5'])
-        expectedIds.append(['10'])
-        expectedIds.append(['17'])
-        expectedIds.append(['1'])
-        expectedIds.append(['6'])
-        expectedIds.append(['2'])
+        expected_ids = []
+        expected_ids.append(['21', '12', '7', '3'])
+        expected_ids.append(['15', '18', '13', '20'])
+        expected_ids.append(['19', '14', '11'])
+        expected_ids.append(['22', '9', '4'])
+        expected_ids.append(['8'])
+        expected_ids.append(['5'])
+        expected_ids.append(['10'])
+        expected_ids.append(['17'])
+        expected_ids.append(['1'])
+        expected_ids.append(['6'])
+        expected_ids.append(['2'])
 
-        for ids1, ids2 in zip(expectedIds, vectors):
+        for ids1, ids2 in zip(expected_ids, vectors):
             self.assertEquals(ids1, ids2)
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_sortVectorLength(self):
-        expectedIds = ['21', '15', '18', '12', '19', '22', '9', '14', '13', '7', '20', '8', '5', '10', '17', '4', '11', '3', '1', '6', '2']
+        expected_ids = ['21', '15', '18', '12', '19', '22', '9', '14', '13', '7', '20', '8', '5', '10', '17', '4',
+                        '11', '3', '1', '6', '2']
 
-        actualIds = self.indexing._getSortedVectorIds()
-        self.assertEquals(self.numberDiffractionVectors, len(actualIds))
+        actual_ids = self.indexing._getSortedVectorIds()
+        self.assertEquals(self.numberDiffractionVectors, len(actual_ids))
 
-        self.assertEquals(expectedIds, actualIds)
+        self.assertEquals(expected_ids, actual_ids)
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_computeRatioMethod(self):
         self.indexing.computeRatioMethod()
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
     def test_computeDiffAngle(self):
@@ -149,28 +180,28 @@ class TestIndexing(unittest.TestCase):
         v3 = np.array((1.0, 1.0, 0.0))
         v4 = np.array((-1.0, 0.0, 0.0))
 
-        diffAngle = self.indexing._computeAngleBetweenTwoVectors_rad(v1, v1)
-        self.assertAlmostEquals(0.0, diffAngle)
+        diff_angle = self.indexing._computeAngleBetweenTwoVectors_rad(v1, v1)
+        self.assertAlmostEquals(0.0, diff_angle)
 
-        diffAngle = self.indexing._computeAngleBetweenTwoVectors_rad(v1, v2)
-        self.assertAlmostEquals(math.pi/2.0, diffAngle)
+        diff_angle = self.indexing._computeAngleBetweenTwoVectors_rad(v1, v2)
+        self.assertAlmostEquals(math.pi/2.0, diff_angle)
 
-        diffAngle = self.indexing._computeAngleBetweenTwoVectors_rad(v2, v1)
-        self.assertAlmostEquals(math.pi/2.0, diffAngle)
+        diff_angle = self.indexing._computeAngleBetweenTwoVectors_rad(v2, v1)
+        self.assertAlmostEquals(math.pi/2.0, diff_angle)
 
-        diffAngle = self.indexing._computeAngleBetweenTwoVectors_rad(v1, v3)
-        self.assertAlmostEquals(math.pi/4.0, diffAngle)
+        diff_angle = self.indexing._computeAngleBetweenTwoVectors_rad(v1, v3)
+        self.assertAlmostEquals(math.pi/4.0, diff_angle)
 
-        diffAngle = self.indexing._computeAngleBetweenTwoVectors_rad(v2, v3)
-        self.assertAlmostEquals(math.pi/4.0, diffAngle)
+        diff_angle = self.indexing._computeAngleBetweenTwoVectors_rad(v2, v3)
+        self.assertAlmostEquals(math.pi/4.0, diff_angle)
 
-        diffAngle = self.indexing._computeAngleBetweenTwoVectors_rad(v1, v4)
-        self.assertAlmostEquals(math.pi, diffAngle)
+        diff_angle = self.indexing._computeAngleBetweenTwoVectors_rad(v1, v4)
+        self.assertAlmostEquals(math.pi, diff_angle)
 
-        #self.fail("Test if the testcase is working.")
+        # self.fail("Test if the testcase is working.")
         self.assert_(True)
 
-if __name__ == '__main__':    #pragma: no cover
-    logging.getLogger().setLevel(logging.DEBUG)
-    from pyHendrixDemersTools.Testings import runTestModule
-    runTestModule()
+
+if __name__ == '__main__':  # pragma: no cover
+    import nose
+    nose.runmodule()

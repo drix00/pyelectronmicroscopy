@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-.. py:currentmodule:: electronmicroscopy.tem.test_angle_between_directions
+.. py:currentmodule:: electronmicroscopy.tem.cnse670_exam2
 
 .. moduleauthor:: Hendrix Demers <hendrix.demers@mail.mcgill.ca>
 
-Tests for the module :py:mod:`electronmicroscopy.tem.angle_between_directions`.
+
 """
+
 
 ###############################################################################
 # Copyright 2017 Hendrix Demers
@@ -26,46 +27,44 @@ Tests for the module :py:mod:`electronmicroscopy.tem.angle_between_directions`.
 ###############################################################################
 
 # Standard library modules.
-import unittest
 
 # Third party modules.
 
 # Local modules.
 
 # Project modules.
-import electronmicroscopy.tem.angle_between_directions as AngleBetweenDirections
 
 # Globals and constants variables.
 
+def getLineNumber():
+    lineNumbers = range(1,6+1)
+    #lineNumbers.extend(range(8,14+1))
+    #lineNumbers.extend(range(16,22+1))
+    #lineNumbers.extend(range(24,27+1))
 
-class TestAngleBetweenDirections(unittest.TestCase):
-    """
-    TestCase class for the module `electronmicroscopy.tem.angle_between_directions`.
-    """
+    return lineNumbers
 
-    def setUp(self):
-        """
-        Setup method.
-        """
+def _getFamilies():
+    hklFamilies = {}
 
-        unittest.TestCase.setUp(self)
+    hklFamilies[1] = [(1, 0, 0)]
+    hklFamilies[2] = [(1, 1, 0)]
+    hklFamilies[3] = [(1, 1, 1)]
+    hklFamilies[4] = [(2, 0, 0)]
+    hklFamilies[5] = [(2, 1, 0)]
+    hklFamilies[6] = [(2, 1, 1)]
 
-    def tearDown(self):
-        """
-        Teardown method.
-        """
+    return hklFamilies
 
-        unittest.TestCase.tearDown(self)
+def getFamily(lineNumber):
+    hklFamilies = _getFamilies()
 
-    def testSkeleton(self):
-        """
-        First test to check if the testcase is working with the testing framework.
-        """
+    return hklFamilies[lineNumber]
 
-        # self.fail("Test if the testcase is working.")
-        self.assert_(True)
+def run():
+    lineNumbers = getLineNumber()
+    print(lineNumbers)
 
-
-if __name__ == '__main__':  # pragma: no cover
-    import nose
-    nose.runmodule()
+if __name__ == '__main__':    #pragma: no cover
+    import pyHendrixDemersTools.Runner as Runner
+    Runner.Runner().run(runFunction=run)
