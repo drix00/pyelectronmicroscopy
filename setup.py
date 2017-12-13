@@ -71,6 +71,7 @@ setup(name="electronmicroscopy",
 
       install_requires=['numpy',
                         'matplotlib',
+                        'scipy',
                         ],
       setup_requires=['nose', 'coverage'],
 

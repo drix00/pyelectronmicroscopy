@@ -95,3 +95,6 @@ ENV/
 .settings
 .project
 .pydevproject
+
+# Project folders
+figures/
