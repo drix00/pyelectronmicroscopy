@@ -42,7 +42,7 @@ import os
 # Third party modules.
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.constants import N_A
+from scipy.constants import N_A, physical_constants
 
 # Local modules.
 
@@ -200,6 +200,67 @@ def compute_b_nm(Z, A, rho, E_0, thickness_nm, percent):
     return b_nm
 
 
+def compute_goldstein_b_nm(Z, A, rho, E_0, thickness_nm, percent):
+    """Equation (2)"""
+    factor = np.sqrt(rho/A)
+    thickness_cm = thickness_nm * 1.0e-7
+    b_cm = 625.0 * Z / E_0 * factor * np.power(thickness_cm, 3.0/2.0)
+
+    b_nm = b_cm * 1.0e7
+    return b_nm
+
+
+def compute_reimer_b_nm(Z, A, rho, E_0, thickness_nm, percent):
+    """Equation (13) in Niels paper"""
+    theta_zero = compute_theta_zero(Z, E_0)
+
+    delta = compute_delta(theta_zero)
+
+    sigma = compute_sigma(Z, E_0, delta)
+
+    lambda_cm = compute_lambda(A, rho, sigma)
+    lambda_nm = lambda_cm * 1.0e7
+
+    a_H_m, unit, uncertainty = physical_constants["Bohr radius"]
+    # print(unit)
+    a_H_nm = a_H_m * 1.0e9
+    factor1 = lambda_nm * lambda_nm / (2.0 * np.pi * a_H_nm)
+    rho_1_nm3 = rho / 1.0e21
+    factor2 = np.sqrt(N_A*rho_1_nm3 / (3.0 * np.pi * A))
+    factor3 = Z * (1.0 + E_0 / 511.0)
+
+    b_nm = factor1 * factor2 * factor3 * np.power(thickness_nm, 1.5)
+    return b_nm
+
+
+def compute_reimer2_b_nm(Z, A, rho, E_0, thickness_nm, percent):
+    """Equation (13) in Niels paper"""
+    E_0_eV = E_0 * 1.0e3
+    factor1 = np.sqrt(rho / A)
+    factor2 = Z / E_0_eV
+    factor3 = (1.0 + E_0_eV / 511.0e3)/(1.0 + E_0_eV / (2.0 * 511.0e3))
+
+    thickness_cm = thickness_nm * 1.0e-7
+    b_cm = 1.05e5 * factor1 * factor2 * factor3 * np.power(thickness_cm, 3.0/2.0)
+    b_nm = b_cm * 1.0e7
+    return b_nm
+
+
+def compute_t_l(Z, A, rho, E_0, thickness_nm):
+    """Equation (12)"""
+    theta_zero = compute_theta_zero(Z, E_0)
+
+    delta = compute_delta(theta_zero)
+
+    sigma = compute_sigma(Z, E_0, delta)
+
+    lambda_cm = compute_lambda(A, rho, sigma)
+    lambda_nm = lambda_cm * 1.0e7
+
+    t_l = thickness_nm / lambda_nm
+    return t_l
+
+
 def create_figure_5():
     t_ls = np.logspace(np.log10(0.001), np.log10(10))
 
@@ -302,6 +363,9 @@ def create_dejonge_2017_figure_5():
     thicknesses_nm = np.linspace(1.0, 600.0, 1000)
     thicknesses_um = thicknesses_nm*1.0e-3
     bs_nm = [compute_b_nm(Z_al, A_al, rho_al, E_0, thickness_nm, PERCENT_90) for thickness_nm in thicknesses_nm]
+    t_ls = [compute_t_l(Z_al, A_al, rho_al, E_0, thickness_nm) for thickness_nm in thicknesses_nm]
+    bgs_nm = [compute_goldstein_b_nm(Z_al, A_al, rho_al, E_0, thickness_nm, PERCENT_90) for thickness_nm in thicknesses_nm]
+    brs_nm = [compute_reimer2_b_nm(Z_al, A_al, rho_al, E_0, thickness_nm, PERCENT_90) for thickness_nm in thicknesses_nm]
 
     plt.figure()
     plt.plot(thicknesses_um, bs_nm)
@@ -320,6 +384,25 @@ def create_dejonge_2017_figure_5():
     plt.savefig(figure_file_path)
 
     plt.close()
+
+    plt.figure()
+    plt.plot(t_ls, bs_nm, label="Gauvin")
+    plt.plot(t_ls, bgs_nm, label="Goldstein")
+    plt.plot(t_ls, brs_nm, label="Reimer")
+
+    plt.xlabel(r"t/$\lambda$")
+    plt.ylabel("b (nm)")
+    plt.legend()
+
+    plt.ylim(ymin=0.0)
+    figure_file_path = os.path.join(figure_path, "dejonge_2017_figure_5b.png")
+    plt.savefig(figure_file_path)
+
+    plt.ylim((0.0, 6))
+    figure_file_path = os.path.join(figure_path, "dejonge_2017_figure_5b_ymax6.png")
+    plt.savefig(figure_file_path)
+
+    # plt.close()
 
 
 if __name__ == '__main__':  # pragma: no cover
