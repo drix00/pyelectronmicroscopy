@@ -405,11 +405,57 @@ def create_dejonge_2017_figure_5():
     # plt.close()
 
 
-if __name__ == '__main__':  # pragma: no cover
-    create_figure_5()
-    create_figure_6()
-    create_figure_9_al()
-    create_dejonge_2017_figure_5()
+def compute_sigma_beta(Z, lambda_cm, E_0_keV, beta_rad):
+    theta0 = compute_theta_zero(Z, E_0_keV)
 
+    factor1 = np.power(Z, 4.0/3.0) * lambda_cm * lambda_cm * np.power(1.0 + E_0_keV/511.0, 2) / np.pi
+    factor2 = 1.0 / (1.0 + np.power(beta_rad / theta0, 2))
+
+    sigma_cm = factor1 * factor2
+    return sigma_cm
+
+
+def wavelength_relativistic_electron_nm(energy_keV):
+    energy_eV = energy_keV * 1.0e3
+    h = 6.626e-34
+    restEnergy_eV = 511.0e3
+    resMass_kg = 9.109e-31
+    charge_C = 1.602e-19
+    nominator = h / np.sqrt(charge_C)
+
+    denominator = np.sqrt(2.0 * resMass_kg * energy_eV * (1.0 + energy_eV / (2.0 * restEnergy_eV)))
+
+    wavelength_m = nominator / denominator
+    wavelength_nm = wavelength_m * 1.0e9
+
+    return wavelength_nm
+
+
+def niels_model():
+    A_al = 26.98
+    rho_al = 2.7
+    Z_al = 13
+
+    E_0 = 200.0
+    beta_rad = 11.0e-3
+
+    for beta_rad in [11.0e-3, 68.e-3]:
+        lambda_nm = wavelength_relativistic_electron_nm(E_0)
+        lambda_cm = lambda_nm*1.0e-7
+
+        sigma_beta_cm = compute_sigma_beta(Z_al, lambda_cm, E_0, beta_rad)
+        mean_free_path_cm = A_al / (sigma_beta_cm * rho_al * N_A)
+
+        mean_free_path_um = mean_free_path_cm * 1.0e4
+        print("mean_free_path_um for {} mrad: {}".format(beta_rad, mean_free_path_um))
+
+
+if __name__ == '__main__':  # pragma: no cover
+    # create_figure_5()
+    # create_figure_6()
+    # create_figure_9_al()
+    # create_dejonge_2017_figure_5()
+
+    niels_model()
     plt.show()
 
